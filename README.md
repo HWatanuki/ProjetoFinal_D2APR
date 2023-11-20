@@ -18,6 +18,8 @@ The dataset contains almost 3 Million records where each instance represents a l
 
 Due to its considreable size (1.7GB) the dataset cannot be loaded using the regular free google colab platform and therefore it is suggested that this notebook is executed in a computer with sufficient memory (16GB at a minimum).
 
+A data dictionary has been made available in the repository: https://github.com/HWatanuki/ProjetoFinal_D2APR/blob/main/LCDataDictionary.xlsx 
+
 # b) Exploratory data analysis
 
 Although not an usual approach, in this study the size of the raw dataset made impractical to conduct an exploratory data analysis without first performing some cleanup on information that is not useful for the end goal of the project. 
