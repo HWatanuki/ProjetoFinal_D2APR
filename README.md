@@ -44,23 +44,49 @@ After exploring the dataset, the following findings can be highlighted along wit
 
 * Most of the non numeric features have a categorical nature and will need to be encoded for the machine learning training.
 
-# c) Metadados
-A base de dados utilizada no trabalho foi a da Comissão de Taxi e Limousine da cidade de Nova York (https://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page). 
+# c) Cleaning and preprocessing the dataset
 
-Essa base contém registros de viagens de passageiros de taxi da cidade de Nova York com os seguintes atributos:
-- Local, data e hora da partida e chegada de cada viagem
-- Distância, custo, tarifa e número de passageiros de cada viagem
+The exploratory data analysis has provided important insights for the cleaning and preprocessing of the dataset. 
 
-Para as análises foram selecionados 2 datasets correspondendo às viagens realizadas entre os meses de Janeiro e Fevereiro de 2017, bem como um dataset contendo os códigos e descrições das áreas da cidade de Nova York.
+In this step the dataset was sliced and reduced only to the attributes that help predict the risk of loan request. This should contribute to a more efficient training of the models:
 
-Os datasets utilizados estão disponíveis aqui: 
+* The features with percentage values were cleaned and correctly typed as numeric features so their values can be considered quantitatively in the training.
 
-A descrição mais detalhada dos dados está disponível aqui:
+* The class imbalance was addressed via undersampling and since the dataset had a very large number of records, the missing value issue was addressed via undersampling as well by only selecting records with non null values.
 
-# d) Scripts de consulta dos dados
-Os códigos utilizados para consultas SQL dos dados estão disponíveis aqui:
+* Training and test samples were extracted before enconding and feature scalling to avoid data leakage from the training into the test sample. A Stratified sampling approach was used to make sure the class imbalance was maintained in the training and test samples.
 
-# e) Visualizações
-As visualizações das consultas mais relevantes estão disponíveis aqui:
+* The categorical features were enconded and converted into numerical values so they can be considered for the subsequent training of the machine learning model.
 
+* A robust scalling approach was used for feature scalling of the numeric fatures to ensure that they are robust to the outliers indentified during the exploratory data analysis.
+
+Taken together, all the actions performed during the preprocessing and cleaning step should contribute to a more efficient and precise training of the machine learning model.
+
+# d) Training and valiation of the model
+
+Since the objective of the machine learning model is to predict one of the two classes that correspond whether the individual requesting a loan will fully paid it or not (i.e., a binominal classification), the following machine learning algorithms were selected the training of the model: KNN, SVM, Logistic Regression and Decision Tree.
+
+For cross validation, each algorithm was subjected to five (5) training sets randomly splitted with no stratification (i.e. five folds). Therefore each algorithm was used for training and evaluation five times, picking a different fold (validation set) for evaluation every time and training on the other 4 folds (train-dev set). The result is an array containing the 5 evaluation scores.
+
+Therefore, a function was created to print the cross validation results, i.e., the accuracy scores, their mean and standard deviation. The mean and standard deviation values were used to compare the four algorithms
+
+# e) Results and discussion
+
+The first model using KNN has shown an mean accuracy value of 74.8% which was the lowest among the four models evaluated. This could be due to the fact that in high dimensional settings as the one being investigated, the accuracy of KNN are affected by nuisance features. Therefore, this algorithm was not considered for further analysis.
+
+The second model trained using SVM has demonstrated a better mean accuracy value of 83.3%, marginally superior to the mean accuracy of the Decision Tree of 82.3%. However, the Decision Tree model has emerged as a superior alternative given that it not only deals better with categorical data (almost 30% of the features are categorical), but it also converged much faster than SVM, thus making the Decision Tree model more efficient from a computing resources perspective.
+
+Lastly, the model trained using Logistic Regression has shown the higher mean accuracy value (88.5%), suggesting that this algorithm could be the best one among the four algorithms being tested. However, since all the model are still somewhat underfitted, a fine-tuning step was suggested in an attempt to improve the accuracy of the Logistic Regression model by leveraging only the most important features according to the Decision Tree model.
+
+This notebook has suggested that the five main variables that can be used to determine credit risk at the moment of a loan request are the following, in order of importance:
+
+* last_fico_range_high: The upper boundary range the borrower’s last FICO pulled belongs to.
+
+* installment: The monthly payment owed by the borrower if the loan originates
+
+* dti: A ratio calculated using the borrower’s total monthly debt payments on the total debt obligations, excluding mortgage and the requested LC loan, divided by the borrower’s self-reported monthly income.
+
+* term: The number of payments on the loan. Values are in months and can be either 36 or 60.
+
+* emp_title: The job title supplied by the Borrower when applying for the loan.
 
