@@ -28,7 +28,7 @@ The dataset contains almost 3 Million records where each instance represents a l
 
 ![image](https://github.com/HWatanuki/ProjetoFinal_D2APR/assets/50485300/e8d89b5f-a349-40ed-b298-2fe1487ed315)
 
-Each loan request contains 141 atributes and the data dictionary for the dataset can be accessed here: https://github.com/HWatanuki/ProjetoFinal_D2APR/blob/main/LCDataDictionary.xlsx 
+Each loan request contains 141 atributes (see image below) and the data dictionary for the dataset can be accessed here: https://github.com/HWatanuki/ProjetoFinal_D2APR/blob/main/LCDataDictionary.xlsx 
 
 ![image](https://github.com/HWatanuki/ProjetoFinal_D2APR/assets/50485300/8471fe7d-124c-4925-9bdc-12035251d711)
 
@@ -46,7 +46,7 @@ After exploring the dataset, the following findings can be highlighted along wit
 
 * There are features that should not be known during the moment of the loan request (such as payments received so far) that need to be removed from the dataset before training the model.
 
-* The dataset has a 4:1 ratio of loan request that have been successfully paid vs. not paid, i.e., the dataset is extremely unbalanced. Undersampling can be a potential approach to address this unbalance.
+* The dataset has a 4:1 ratio of loan request that have been successfully paid vs. not paid, i.e., the dataset is extremely unbalanced (see image above). Undersampling can be a potential approach to address this unbalance.
 
 * There are no duplicated records in the dataset.
 
@@ -78,7 +78,7 @@ In this step the dataset was sliced and reduced only to the attributes that help
 
 * A robust scalling approach was used for feature scalling of the numeric fatures to ensure that they are robust to the outliers indentified during the exploratory data analysis.
 
-Taken together, all the actions performed during the preprocessing and cleaning step should contribute to a more efficient and precise training of the machine learning model.
+Taken together, all the actions performed during the preprocessing and cleaning step should contribute to a more efficient and precise training of the machine learning model. This is a screen shot from the cleaned and preprocessed dataset:
 
 ![image](https://github.com/HWatanuki/ProjetoFinal_D2APR/assets/50485300/7743df5e-24a0-4f94-b618-59c8dbbe5285)
 
@@ -96,15 +96,15 @@ Therefore, a function was created to print the cross validation results, i.e., t
 
 The first model using KNN has shown an mean accuracy value of 74.8% which was the lowest among the four models evaluated. This could be due to the fact that in high dimensional settings as the one being investigated, the accuracy of KNN are affected by nuisance features. Therefore, this algorithm was not considered for further analysis.
 
-The second model trained using SVM has demonstrated a better mean accuracy value of 83.3%, marginally superior to the mean accuracy of the Decision Tree of 82.3%. However, the Decision Tree model has emerged as a superior alternative given that it not only deals better with categorical data (almost 30% of the features are categorical), but it also converged much faster than SVM, thus making the Decision Tree model more efficient from a computing resources perspective.
+The second model trained using SVM has demonstrated a better mean accuracy value of 85%, superior to the mean accuracy of the Decision Tree of 82.3%. However, the Decision Tree model has emerged as a superior alternative given that it not only deals better with categorical data (almost 30% of the features are categorical), but it also converged much faster than SVM, thus making the Decision Tree model more efficient from a computing resources perspective.
 
-Lastly, the model trained using Logistic Regression has shown the higher mean accuracy value (88.5%), suggesting that this algorithm could be the best one among the four algorithms being tested. However, since all the model are still somewhat underfitted, a fine-tuning step was suggested in an attempt to improve the accuracy of the Logistic Regression model by leveraging only the most important features according to the Decision Tree model.
+Lastly, the model trained using Logistic Regression has shown the higher mean accuracy value (88.5% - image below), suggesting that this algorithm could be the best one among the four algorithms being tested. However, since all the model are still somewhat underfitted, a fine-tuning step was suggested in an attempt to improve the accuracy of the Logistic Regression model by leveraging only the most important features according to the Decision Tree model.
 
 ![image](https://github.com/HWatanuki/ProjetoFinal_D2APR/assets/50485300/a4c99054-ee0a-4103-bd93-e89c71320f0e)
 
 This notebook has suggested that the five main variables that can be used to determine credit risk at the moment of a loan request are the following, in order of importance:
 
-1) last_fico_range_high: The upper boundary range the borrower’s last FICO pulled belongs to.
+1) last_fico_range_high: The upper boundary range the borrower’s last FICO pulled belongs to (image below).
 
 2) last_fico_range_low: The lower boundary range the borrower’s last FICO pulled belongs to.
 
@@ -113,4 +113,6 @@ This notebook has suggested that the five main variables that can be used to det
 4) dti: A ratio calculated using the borrower’s total monthly debt payments on the total debt obligations, excluding mortgage and the requested LC loan, divided by the borrower’s self-reported monthly income.
 
 5) emp_title: The job title supplied by the Borrower when applying for the loan.
+
+![image](https://github.com/HWatanuki/ProjetoFinal_D2APR/assets/50485300/a712dfa6-dec9-4029-9223-c69c23481195)
 
