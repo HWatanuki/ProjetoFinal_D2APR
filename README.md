@@ -5,22 +5,38 @@ Projeto Final da disciplina D2APR - Aprendizagem de máquina do curso de Especia
 - Hugo Martinelli Watanuki
 
 # Credit Risk Analysis
+
+![image](https://github.com/HWatanuki/ProjetoFinal_D2APR/assets/50485300/8d289689-d71a-46b9-9817-1c19c6d03124)
+
 The objective of this project is to identify, through statistical techniques and learning machine, a prediction model based on attributes of individuals that allows measuring the risk of a credit application. The main questions to be answered are:
 
-What variables can be used to establish credit risk at the moment of a loan request?
-What are the characteristics of the statistical model capable of predicting credit risk?
+1) What variables can be used to establish credit risk at the moment of a loan request?
+
+2) What are the characteristics of the statistical model capable of predicting credit risk?
 
 # a) The dataset
 
-The dataset being leveraged in this notebook is available from kaggle: https://www.kaggle.com/datasets/ethon0426/lending-club-20072020q1/
+The dataset being leveraged in this notebook contains Lending Club historical data from 2007 to 2020 and is available from kaggle: https://www.kaggle.com/datasets/ethon0426/lending-club-20072020q1/
 
-The dataset contains almost 3 Million records where each instance represents a loan request between the years of 2007 and 2020. Each loan request contains 141 atributes and the data dictionary for te dataset can be accessed here:
+LendingClub is a financial services company headquartered in San Francisco, California. It was the first peer-to-peer lender to register its offerings as securities with the Securities and Exchange Commission (SEC), and to offer loan trading on a secondary market. At its height, LendingClub was the world's largest peer-to-peer lending platform. The company reported that $15.98 billion in loans had been originated through its platform up to December 31, 2015.
+
+LendingClub enabled borrowers to create unsecured personal loans between $1,000 and $40,000. The standard loan period was three years. Investors were able to search and browse the loan listings on LendingClub website and select loans that they wanted to invest in based on the information supplied about the borrower, amount of loan, loan grade, and loan purpose. Investors made money from the interest on these loans. LendingClub made money by charging borrowers an origination fee and investors a service fee.
+
+![image](https://github.com/HWatanuki/ProjetoFinal_D2APR/assets/50485300/af8cf438-5ace-4b00-86bd-2082ba8e6c01)
+
+The dataset contains almost 3 Million records where each instance represents a loan request that was accepted by Lending Club. The loans could then be honored by the requestors (non-default) or not (default).
+
+![image](https://github.com/HWatanuki/ProjetoFinal_D2APR/assets/50485300/e8d89b5f-a349-40ed-b298-2fe1487ed315)
+
+Each loan request contains 141 atributes and the data dictionary for the dataset can be accessed here: https://github.com/HWatanuki/ProjetoFinal_D2APR/blob/main/LCDataDictionary.xlsx 
+
+![image](https://github.com/HWatanuki/ProjetoFinal_D2APR/assets/50485300/8471fe7d-124c-4925-9bdc-12035251d711)
 
 Due to its considreable size (1.7GB) the dataset cannot be loaded using the regular free google colab platform and therefore it is suggested that this notebook is executed in a computer with sufficient memory (16GB at a minimum).
 
-A data dictionary has been made available in the repository: https://github.com/HWatanuki/ProjetoFinal_D2APR/blob/main/LCDataDictionary.xlsx 
-
 # b) Exploratory data analysis
+
+![image](https://github.com/HWatanuki/ProjetoFinal_D2APR/assets/50485300/571ed8b6-bb06-4119-af49-1032f2f19474)
 
 Although not an usual approach, in this study the size of the raw dataset made impractical to conduct an exploratory data analysis without first performing some cleanup on information that is not useful for the end goal of the project. 
 
@@ -36,7 +52,7 @@ After exploring the dataset, the following findings can be highlighted along wit
 
 * Several features have a severe rate of missing values that need to be treated accordingly. Literature suggests that a 10% rate of missing values can bias the training while values above 40% can be impractical.
 
-* There are 57 numeric features and 23 non numeric features to be used for training the model.
+* There are 57 numeric features and 16 non numeric features to be used for training the model.
 
 * The order of magnitude of the numeric features varies considerably. Feature scaling is recommended depending of the machine learning algorithm selected.
 
@@ -64,13 +80,17 @@ In this step the dataset was sliced and reduced only to the attributes that help
 
 Taken together, all the actions performed during the preprocessing and cleaning step should contribute to a more efficient and precise training of the machine learning model.
 
-# d) Training and valiation of the model
+![image](https://github.com/HWatanuki/ProjetoFinal_D2APR/assets/50485300/7743df5e-24a0-4f94-b618-59c8dbbe5285)
+
+# d) Training and validation of the model
+
+![image](https://github.com/HWatanuki/ProjetoFinal_D2APR/assets/50485300/9f74c8fd-1139-4db5-ab22-e312bbfaebf1)
 
 Since the objective of the machine learning model is to predict one of the two classes that correspond whether the individual requesting a loan will fully paid it or not (i.e., a binominal classification), the following machine learning algorithms were selected the training of the model: KNN, SVM, Logistic Regression and Decision Tree.
 
 For cross validation, each algorithm was subjected to five (5) training sets randomly splitted with no stratification (i.e. five folds). Therefore each algorithm was used for training and evaluation five times, picking a different fold (validation set) for evaluation every time and training on the other 4 folds (train-dev set). The result is an array containing the 5 evaluation scores.
 
-Therefore, a function was created to print the cross validation results, i.e., the accuracy scores, their mean and standard deviation. The mean and standard deviation values were used to compare the four algorithms
+Therefore, a function was created to print the cross validation results, i.e., the accuracy scores, their mean and standard deviation. The mean and standard deviation values were used to compare the four algorithms.
 
 # e) Results and discussion
 
@@ -80,15 +100,17 @@ The second model trained using SVM has demonstrated a better mean accuracy value
 
 Lastly, the model trained using Logistic Regression has shown the higher mean accuracy value (88.5%), suggesting that this algorithm could be the best one among the four algorithms being tested. However, since all the model are still somewhat underfitted, a fine-tuning step was suggested in an attempt to improve the accuracy of the Logistic Regression model by leveraging only the most important features according to the Decision Tree model.
 
+![image](https://github.com/HWatanuki/ProjetoFinal_D2APR/assets/50485300/a4c99054-ee0a-4103-bd93-e89c71320f0e)
+
 This notebook has suggested that the five main variables that can be used to determine credit risk at the moment of a loan request are the following, in order of importance:
 
-* last_fico_range_high: The upper boundary range the borrower’s last FICO pulled belongs to.
+1) last_fico_range_high: The upper boundary range the borrower’s last FICO pulled belongs to.
 
-* installment: The monthly payment owed by the borrower if the loan originates
+2) last_fico_range_low: The lower boundary range the borrower’s last FICO pulled belongs to.
 
-* dti: A ratio calculated using the borrower’s total monthly debt payments on the total debt obligations, excluding mortgage and the requested LC loan, divided by the borrower’s self-reported monthly income.
+3) installment: The monthly payment owed by the borrower if the loan originates
 
-* term: The number of payments on the loan. Values are in months and can be either 36 or 60.
+4) dti: A ratio calculated using the borrower’s total monthly debt payments on the total debt obligations, excluding mortgage and the requested LC loan, divided by the borrower’s self-reported monthly income.
 
-* emp_title: The job title supplied by the Borrower when applying for the loan.
+5) emp_title: The job title supplied by the Borrower when applying for the loan.
 
